@@ -1,0 +1,37 @@
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading {
+    margin-bottom: 0;
+}
+
+.display {
+    text-align: end;
+}
+
+.keypad {
+    display: flex;
+}
+
+.numpad {
+    display: flex;
+    flex-direction: column;
+}
+
+.r1, 
+.r2,
+.r3,
+.r4,
+.r5 {
+    display: flex;
+}

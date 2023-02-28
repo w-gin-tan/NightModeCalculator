@@ -19,6 +19,16 @@ body {
     text-align: end;
 }
 
+#ans {
+    font-family: "Segoe UI";
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    background-color: #212121;
+    margin: 0;
+    padding: 32px 8px 32px 128px;
+}
+
 .keypad {
     display: flex;
 }

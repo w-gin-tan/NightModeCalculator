@@ -11,8 +11,16 @@ body {
     align-items: center;
 }
 
+.calculator {
+    padding-bottom: 50px;
+}
+
 .heading {
+    background-color: #212121;
+
+    padding: 8px 12px 0 12px;
     margin-bottom: 0;
+    border-radius: 5px 5px 0 0;
 }
 
 .display,
@@ -22,10 +30,9 @@ body {
 
 .display {
     text-align: end;
-
-    border-radius: 5px 5px 0 0;
 }
 
+.heading,
 #ans,
 .row div {
     font-family: "Segoe UI";
@@ -34,11 +41,11 @@ body {
 }
 
 #ans {
-    font-size: 36px;
+    font-size: 48px;
     
     background-color: #212121;
     margin: 0;
-    padding: 32px 8px 32px 128px;
+    padding: 18px 12px 12px 128px;
 }
 
 .keypad {
@@ -60,13 +67,28 @@ body {
     flex: 1; 
     min-width: 0;
 
-    font-size: 18px;
-    
-    background-color: #4d4d4d;
+    font-size: 24px;
 
-    padding: 20px 30px 20px 30px;
+    padding: 18px 32px 18px 32px;
     margin: 2px;
+}
 
-    border: 1px solid #4d4d4d;
+.operations {
+    background-color: #323232;
+    border: 1px solid #323232;
+    border-radius: 5px;
+}
+
+.nums,
+.notation {
+    background-color: #424242;
+    border: 1px solid #424242;
+    border-radius: 5px;
+}
+
+#equals {
+    color: #212121;
+    background-color: #07cbf7;
+    border: 1px solid #07cbf7;
     border-radius: 5px;
 }

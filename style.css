@@ -15,15 +15,27 @@ body {
     margin-bottom: 0;
 }
 
+.display,
+.keypad {
+    border: 1px solid #212121;
+}
+
 .display {
     text-align: end;
+
+    border-radius: 5px 5px 0 0;
+}
+
+#ans,
+.row div {
+    font-family: "Segoe UI";
+    font-weight: 600;
+    color: white;
 }
 
 #ans {
-    font-family: "Segoe UI";
     font-size: 36px;
-    font-weight: 600;
-    color: white;
+    
     background-color: #212121;
     margin: 0;
     padding: 32px 8px 32px 128px;
@@ -31,17 +43,30 @@ body {
 
 .keypad {
     display: flex;
-}
-
-.numpad {
-    display: flex;
     flex-direction: column;
+    background-color: #212121;
+
+    border-radius: 0 0 5px 5px;
 }
 
-.r1, 
-.r2,
-.r3,
-.r4,
-.r5 {
+.row,
+.row div {
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row div {
+    flex: 1; 
+    min-width: 0;
+
+    font-size: 18px;
+    
+    background-color: #4d4d4d;
+
+    padding: 20px 30px 20px 30px;
+    margin: 2px;
+
+    border: 1px solid #4d4d4d;
+    border-radius: 5px;
 }

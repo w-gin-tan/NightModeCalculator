@@ -22,3 +22,26 @@ const operate = (operator, a, b) => {
         case "divide": divide(a, b); break;
     }
 }
+
+const displayValue = (val) => {
+    const display = document.getElementById("ans");
+
+    // if the calculator just started, remove the starting 0 after pressing a number
+    if (display.classList.contains("init")) {
+        display.classList.remove("init");
+        display.textContent = "";
+    }
+    display.textContent += val;
+}
+
+const numpad = () => {
+    const nums = document.querySelectorAll(".nums");
+
+    nums.forEach((num) => {
+        num.addEventListener("click", (e) => {
+            displayValue(num.textContent);
+        })
+    })
+}
+
+numpad();

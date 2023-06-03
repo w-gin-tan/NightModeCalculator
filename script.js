@@ -37,18 +37,33 @@ const numSetup = () => {
     const decimal = document.querySelector("#decimal");
     const display = document.getElementById("ans");
 
-    /*
     sign.addEventListener("click", (e) => {
-        // remove 0 at some point when switching to negative number
-        val = val.includes("-") ? val.slice(1) : "-" + val;
-        displayValue(val);  
+        if (display.textContent.includes("-")) {
+            val = "";
+            displayValue(display.textContent.slice(1));
+        } else {
+            /*
+                if the display value transitions to the rhs of the operation,
+                display a default value of -0 when neg sign is activated
+            */
+            val="-";
+            if (display.classList.contains("right")) {
+                displayValue("-0")
+            } else {
+                displayValue(val+display.textContent);
+            }
+        }
     });
-    */
 
     nums.forEach((num) => {
         num.addEventListener("click", (e) => {
-            if (display.textContent === "0" && num.textContent === "0") {
-                displayValue(0); // no duplicates of zero to add if the result is zero
+            // if the display is at starting number 0
+            if ((display.textContent === "0" || display.textContent === "-0")) {
+                // don't allow zero duplicates
+                if (num.textContent !== 0) {
+                    val += num.textContent;
+                    displayValue(val);
+                }
             } else {
                 val += num.textContent;
                 displayValue(val);
@@ -71,6 +86,7 @@ const operSetup = () => {
 
     operations.forEach((operation) => {
         operation.addEventListener("click", (e) => {
+            display.classList.toggle("right");
             left = parseInt(display.textContent);
             operator = operation.id;
             right = null;     
@@ -80,6 +96,7 @@ const operSetup = () => {
 
     equals.addEventListener("click", (e) => {
         if (!right && left) {
+            display.classList.toggle("left");
             right = parseInt(display.textContent);
             result = operate(operator, left, right);
             displayValue(result);

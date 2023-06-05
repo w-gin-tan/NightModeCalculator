@@ -30,79 +30,92 @@ const displayValue = (val) => {
     display.textContent = val;
 }
 
-const numSetup = () => {
-    let val = "";
-    const nums = document.querySelectorAll(".nums");
-    const sign = document.querySelector("#sign"); 
-    const decimal = document.querySelector("#decimal");
-    const display = document.getElementById("ans");
-
-    sign.addEventListener("click", (e) => {
-        if (display.textContent.includes("-")) {
-            val = "";
-            displayValue(display.textContent.slice(1));
-        } else {
-            /*
-                if the display value transitions to the rhs of the operation,
-                display a default value of -0 when neg sign is activated
-            */
-            val="-";
-            if (display.classList.contains("right")) {
-                displayValue("-0")
-            } else {
-                displayValue(val+display.textContent);
-            }
-        }
-    });
-
-    nums.forEach((num) => {
-        num.addEventListener("click", (e) => {
-            // if the display is at starting number 0
-            if ((display.textContent === "0" || display.textContent === "-0")) {
-                // don't allow zero duplicates
-                if (num.textContent !== 0) {
-                    val += num.textContent;
-                    displayValue(val);
-                }
-            } else {
-                val += num.textContent;
-                displayValue(val);
-            }
-        });
-    });
-}
-
-const operSetup = () => {
-    let left, right, operator, result;
-
-    // operation and equals sign keys
+const calculator = () => {
+    // displayed value being tracked throughout calculator operations
+    let val = "0";   
+    
+    // Operator logic
     const operations = document.querySelectorAll(".operations");
-    const equals = document.querySelector("#equals");
-
-    // calculator display
-    const display = document.getElementById("ans");
-
-    numSetup();
-
+    let left, right, operator;
     operations.forEach((operation) => {
         operation.addEventListener("click", (e) => {
-            display.classList.toggle("right");
-            left = parseInt(display.textContent);
-            operator = operation.id;
-            right = null;     
-            numSetup(); // reload expression for rhs of operation
+            if (left === undefined) {
+                left = parseInt(val);
+                operator = operation.id;
+            } 
+            else { // For multiple operations in one expression
+                left = operate(operator, left, parseInt(val));
+                operator = operation.id;
+                displayValue(left);
+            }
+            val = "" // Reset value for numbers after operator
         });
     });
 
+    // Equals logic
+    const equals = document.getElementById("equals");
     equals.addEventListener("click", (e) => {
-        if (!right && left) {
-            display.classList.toggle("left");
-            right = parseInt(display.textContent);
-            result = operate(operator, left, right);
-            displayValue(result);
+        if (left && operator) {
+            if (val === "") { // Case for when rhs doesn't exist -> square the number
+                displayValue(operate(operator, left, left));
+            } else { // Default case: x (operator) y = ans
+                right = parseInt(val);
+                val = operate(operator, left, right).toString();
+                // TODO: 
+                // COMMIT TO GITHUB
+                // IF 1 / 0 SHOW ERROR
+                // IF DECIMAL ROUND BY 8 PLACES (9 NUMBERS IN TOTAL)
+                // DECIMAL SIGN
+
+                displayValue(val);
+                left = undefined;
+            }
+        } else { // Case for when equals sign clicked on answer -> ans (operator) rhs of previous expression
+            val = operate(operator, parseInt(val), right).toString();
+            displayValue(val);
         }
-        numSetup();
     });
+
+    // Keypad number logic
+    const numbers = document.querySelectorAll(".nums");
+    numbers.forEach((number) => {
+        number.addEventListener("click", (e) => {
+            // Prevent zero dups if the value is "0"
+            if (val === "0") {
+                if (number.textContent !== "0") {
+                    val = "";
+                    right = undefined;
+                    // Add on numbers until the length limit
+                    val += val.length < 9 ? number.textContent : "";
+                }
+            } else {
+                if (right) { // Resets the display value in the case the user presses a number after an equals result.  
+                    val = "";
+                    right = undefined;
+                }    
+                val += val.length < 9 ? number.textContent : "";
+            }
+            displayValue(val);
+        });
+    });
+
+
+    const clear_entry = document.getElementById("clear-entry");
+    // Clear button logic
+    clear_entry.addEventListener("click", (e) => {
+        left = undefined, right = undefined, operator = undefined;
+        val = "0";
+        displayValue(val);
+    });
+
+
+    const backspace = document.getElementById("backspace");
+    // Backspace button logic
+    backspace.addEventListener("click", (e) => {
+        val = val.slice(0, -1);
+        if (val === "") val = "0";
+        displayValue(val);
+    }); 
 }
 
-operSetup();
+calculator();

@@ -87,19 +87,24 @@ const calculator = () => {
                     val = "";
                     right = undefined;
                     // Add on numbers until the length limit
-                    val += val.length < 9 ? number.textContent : "";
+                    val += number.textContent;
                 }
             } else {
                 if (right) { // Resets the display value in the case the user presses a number after an equals result.  
                     val = "";
                     right = undefined;
                 }    
-                val += val.length < 9 ? number.textContent : "";
+
+                // With decimal place, val length should still account for 9 numbers
+                if (val.includes(".")) {
+                    val += (val.length < 10) ? number.textContent : "";
+                } else {
+                    val += (val.length < 9) ? number.textContent : "";
+                }
             }
             displayValue(val);
         });
     });
-
 
     const clear_entry = document.getElementById("clear-entry");
     // Clear button logic
@@ -109,7 +114,6 @@ const calculator = () => {
         displayValue(val);
     });
 
-
     const backspace = document.getElementById("backspace");
     // Backspace button logic
     backspace.addEventListener("click", (e) => {
@@ -117,6 +121,13 @@ const calculator = () => {
         if (val === "") val = "0";
         displayValue(val);
     }); 
+
+    const decimal = document.getElementById("decimal");
+    // Decimal logic
+    decimal.addEventListener("click", (e) => {
+        val += (val.length !== 9 && !val.includes(".")) ? "." : "";
+        displayValue(val);
+    });
 }
 
 calculator();

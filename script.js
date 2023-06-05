@@ -61,13 +61,14 @@ const calculator = () => {
             } else { // Default case: x (operator) y = ans
                 right = parseInt(val);
                 val = operate(operator, left, right).toString();
-                // TODO: 
-                // COMMIT TO GITHUB
-                // IF 1 / 0 SHOW ERROR
-                // IF DECIMAL ROUND BY 8 PLACES (9 NUMBERS IN TOTAL)
-                // DECIMAL SIGN
 
-                displayValue(val);
+                // If the expression is 1 / 0:
+                if (val === "Infinity") {
+                    displayValue("Error");
+                } 
+                else { // Display the value as usual (whether decimal or integer):
+                    displayValue(val.split(".")[1] && val.split(".")[1].length > 8 ? Number(val).toFixed(8) : val);
+                }
                 left = undefined;
             }
         } else { // Case for when equals sign clicked on answer -> ans (operator) rhs of previous expression

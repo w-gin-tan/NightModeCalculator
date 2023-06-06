@@ -15,7 +15,7 @@ const divide = (a, b) => {
 }
 
 const operate = (operator, a, b) => {
-    let operation = "0";
+    let operation = 0;
     switch (operator) {
         case "add": operation = add(a, b); break;
         case "subtract": operation = subtract(a, b); break;
@@ -40,11 +40,11 @@ const calculator = () => {
     operations.forEach((operation) => {
         operation.addEventListener("click", (e) => {
             if (left === undefined) {
-                left = parseInt(val);
+                left = Number(val);
                 operator = operation.id;
             } 
             else { // For multiple operations in one expression
-                left = operate(operator, left, parseInt(val));
+                left = operate(operator, left, Number(val));
                 operator = operation.id;
                 displayValue(left);
             }
@@ -59,7 +59,8 @@ const calculator = () => {
             if (val === "") { // Case for when rhs doesn't exist -> square the number
                 displayValue(operate(operator, left, left));
             } else { // Default case: x (operator) y = ans
-                right = parseInt(val);
+                right = Number(val);
+                console.log(operate(operator, left, right));
                 val = operate(operator, left, right).toString();
 
                 // If the expression is 1 / 0:
@@ -72,10 +73,12 @@ const calculator = () => {
                 left = undefined;
             }
         } else { // Case for when equals sign clicked on answer -> ans (operator) rhs of previous expression
-            val = operate(operator, parseInt(val), right).toString();
+            val = operate(operator, Number(val), right).toString();
             displayValue(val);
         }
     });
+
+    //TODO: FIX 5.29 instead of 5.290000 etc.
 
     // Keypad number logic
     const numbers = document.querySelectorAll(".nums");

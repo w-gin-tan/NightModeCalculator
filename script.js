@@ -53,6 +53,7 @@ const calculator = () => {
     });
 
     // Equals logic
+    // BUG: DECIMAL
     const equals = document.getElementById("equals");
     equals.addEventListener("click", (e) => {
         if (left !== undefined && operator) {
@@ -76,7 +77,8 @@ const calculator = () => {
                 }
                 left = undefined;
             }
-        } else { // Case for when equals sign clicked on answer -> ans (operator) rhs of previous expression
+        } else if (right !== undefined) { // Case for when equals sign clicked on answer -> ans (operator) rhs of previous expression
+            console.log(left, right, operator);
             val = operate(operator, Number(val), right).toString();
             displayValue(val);
         }

@@ -52,8 +52,7 @@ const calculator = () => {
         });
     });
 
-    // Equals logic
-    // BUG: Loss of decimal from equal result
+    // Equals logic 
     const equals = document.getElementById("equals");
     equals.addEventListener("click", (e) => {
         if (left !== undefined && operator) {
@@ -61,9 +60,9 @@ const calculator = () => {
                 if (!right) {
                     right = left;
                 }
-                val = operate(operator, left, right);
-                displayValue(val);
-                left = val; val = "0";
+                val = operate(operator, left, right).toString();
+                displayValue(val.split(".")[1] && val.split(".")[1].length > 8 ? Number.parseFloat(Number(val).toFixed(8)) : val);
+                left = Number(val); val = "0";
             } else { // Default case: x (operator) y = ans 
                 right = Number(val);
                 val = operate(operator, left, right).toString();
@@ -73,7 +72,7 @@ const calculator = () => {
                     displayValue("Error");
                 } 
                 else { // Display the value as usual (whether decimal or integer):
-                    displayValue(val.split(".")[1] && val.split(".")[1].length > 8 ? Number(val).toFixed(8) : val);
+                    displayValue(val.split(".")[1] && val.split(".")[1].length > 8 ? Number.parseFloat(Number(val).toFixed(8)) : val);
                 }
                 left = undefined;
             }

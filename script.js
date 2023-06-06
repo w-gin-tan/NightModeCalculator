@@ -48,22 +48,22 @@ const calculator = () => {
                 operator = operation.id;
                 displayValue(left);
             }
-            val = "" // Reset value for numbers after operator
+            val = "0" // Reset value for numbers after operator
         });
     });
 
     // Equals logic
-    // BUG: DECIMAL
+    // BUG: Loss of decimal from equal result
     const equals = document.getElementById("equals");
     equals.addEventListener("click", (e) => {
         if (left !== undefined && operator) {
-            if (val === "") { // Case for when rhs doesn't exist -> square the number
+            if (val === "0") { // Case for when rhs doesn't exist -> square the number
                 if (!right) {
                     right = left;
                 }
                 val = operate(operator, left, right);
                 displayValue(val);
-                left = val; val = "";
+                left = val; val = "0";
             } else { // Default case: x (operator) y = ans 
                 right = Number(val);
                 val = operate(operator, left, right).toString();
@@ -78,7 +78,6 @@ const calculator = () => {
                 left = undefined;
             }
         } else if (right !== undefined) { // Case for when equals sign clicked on answer -> ans (operator) rhs of previous expression
-            console.log(left, right, operator);
             val = operate(operator, Number(val), right).toString();
             displayValue(val);
         }
@@ -98,7 +97,7 @@ const calculator = () => {
                 }
             } else {
                 if (right) { // Resets the display value in the case the user presses a number after an equals result.  
-                    val = "";
+                    val = val === "0." ? "0." : "";
                     right = undefined;
                 }    
 
@@ -132,6 +131,7 @@ const calculator = () => {
     const decimal = document.getElementById("decimal");
     // Decimal logic
     decimal.addEventListener("click", (e) => {
+        if (left === undefined && right) { val = "0"; } // Reset to "0." if value is an equals answer 
         val += (val.length !== 9 && !val.includes(".")) ? "." : "";
         displayValue(val);
     });

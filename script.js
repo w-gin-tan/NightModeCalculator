@@ -55,12 +55,16 @@ const calculator = () => {
     // Equals logic
     const equals = document.getElementById("equals");
     equals.addEventListener("click", (e) => {
-        if (left && operator) {
+        if (left !== undefined && operator) {
             if (val === "") { // Case for when rhs doesn't exist -> square the number
-                displayValue(operate(operator, left, left));
-            } else { // Default case: x (operator) y = ans
+                if (!right) {
+                    right = left;
+                }
+                val = operate(operator, left, right);
+                displayValue(val);
+                left = val; val = "";
+            } else { // Default case: x (operator) y = ans 
                 right = Number(val);
-                console.log(operate(operator, left, right));
                 val = operate(operator, left, right).toString();
 
                 // If the expression is 1 / 0:
@@ -77,8 +81,6 @@ const calculator = () => {
             displayValue(val);
         }
     });
-
-    //TODO: FIX 5.29 instead of 5.290000 etc.
 
     // Keypad number logic
     const numbers = document.querySelectorAll(".nums");

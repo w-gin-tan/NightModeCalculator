@@ -78,7 +78,7 @@ const calculator = () => {
             }
         } else if (right !== undefined) { // Case for when equals sign clicked on answer -> ans (operator) rhs of previous expression
             val = operate(operator, Number(val), right).toString();
-            displayValue(val);
+            displayValue(val.split(".")[1] && val.split(".")[1].length > 8 ? Number.parseFloat(Number(val).toFixed(8)) : val);
         }
     });
 
@@ -87,9 +87,10 @@ const calculator = () => {
     numbers.forEach((number) => {
         number.addEventListener("click", (e) => {
             // Prevent zero dups if the value is "0"
-            if (val === "0") {
+            if (val === "0" || val === "-0") {
                 if (number.textContent !== "0") {
-                    val = "";
+                    // remove 0 but leave neg sign
+                    val = (val === "-0") ? "-" : "";
                     right = undefined;
                     // Add on numbers until the length limit
                     val += number.textContent;
@@ -134,9 +135,15 @@ const calculator = () => {
         displayValue(val);
     });
 
+    const sign = document.getElementById("sign");
+    // Sign logic
+    sign.addEventListener("click", (e) => {
+        val = !val.includes("-") ? "-" + val : val.slice(1);
+        displayValue(val);
+    });
+
     /*
-    TODO: convert large number to 2e9 etc.
-            make sign event listener
+    TODO: make sign event listener [DONE]
           refactor clear entry and clear listeners
           fancy github link and the odin project copyright
           add background template

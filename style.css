@@ -73,7 +73,8 @@ body {
     margin: 2px;
 }
 
-.operations {
+.operations,
+.manipulations {
     background-color: #323232;
     border: 1px solid #323232;
     border-radius: 5px;
@@ -94,6 +95,7 @@ body {
 }
 
 .operations,
+.manipulations,
 .nums,
 .notation,
 #equals {

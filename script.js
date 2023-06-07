@@ -122,8 +122,7 @@ const calculator = () => {
     const backspace = document.getElementById("backspace");
     // Backspace button logic
     backspace.addEventListener("click", (e) => {
-        val = val.slice(0, -1);
-        if (val === "") val = "0";
+        val = (val.slice(0, -1) === "") ? "0" : val.slice(0, -1);
         displayValue(val);
     }); 
 
@@ -134,6 +133,14 @@ const calculator = () => {
         val += (val.length !== 9 && !val.includes(".")) ? "." : "";
         displayValue(val);
     });
+
+    /*
+    TODO: convert large number to 2e9 etc.
+            make sign event listener
+          refactor clear entry and clear listeners
+          fancy github link and the odin project copyright
+          add background template
+    */
 }
 
 calculator();

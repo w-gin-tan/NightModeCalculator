@@ -113,8 +113,15 @@ const calculator = () => {
     });
 
     const clear_entry = document.getElementById("clear-entry");
-    // Clear button logic
+    // Clear entry button logic
     clear_entry.addEventListener("click", (e) => {
+        val = "0";
+        displayValue(val);
+    });
+
+    const clear = document.getElementById("clear");
+    // Clear button logic
+    clear.addEventListener("click", (e) => {
         left = undefined, right = undefined, operator = undefined;
         val = "0";
         displayValue(val);
@@ -141,13 +148,6 @@ const calculator = () => {
         val = !val.includes("-") ? "-" + val : val.slice(1);
         displayValue(val);
     });
-
-    /*
-    TODO: make sign event listener [DONE]
-          refactor clear entry and clear listeners
-          fancy github link and the odin project copyright
-          add background template
-    */
 }
 
 calculator();

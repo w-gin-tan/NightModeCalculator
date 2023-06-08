@@ -7,12 +7,13 @@ body {
     min-height: 100%;
     margin: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 .calculator {
-    padding-bottom: 50px;
+    padding-bottom: 25px;
 }
 
 .heading {
@@ -101,4 +102,15 @@ body {
 #equals {
     cursor: pointer;
     user-select: none;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5vh;
+}
+
+.footer #title {
+    font-family: 'Segoe UI';
+    font-weight: 600;
 }
